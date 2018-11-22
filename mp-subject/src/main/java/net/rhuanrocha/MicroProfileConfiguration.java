@@ -1,6 +1,7 @@
 
 package net.rhuanrocha;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
@@ -12,6 +13,7 @@ import org.jnosql.diana.mongodb.document.MongoDBDocumentConfiguration;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.Collections;
@@ -40,6 +42,10 @@ public class MicroProfileConfiguration extends Application {
 
     private static final String COLLECTION = "subjects";
 
+    @Inject
+    @ConfigProperty(name ="bd.subject.path")
+    private String bdPath;
+
     private DocumentConfiguration configuration;
 
     private DocumentCollectionManagerFactory managerFactory;
@@ -47,7 +53,7 @@ public class MicroProfileConfiguration extends Application {
     @PostConstruct
     public void init() {
         configuration = new MongoDBDocumentConfiguration();
-        Map<String, Object> settings = Collections.singletonMap("mongodb-server-host-1", "172.18.0.4:27017");
+        Map<String, Object> settings = Collections.singletonMap("mongodb-server-host-1", bdPath);
         managerFactory = configuration.get(Settings.of(settings));
     }
 
