@@ -1,8 +1,0 @@
-net/rhuanrocha/speakers/SpeakerEndpoint.class
-net/rhuanrocha/speakers/SpeakerService.class
-net/rhuanrocha/MicroProfileConfiguration.class
-net/rhuanrocha/ApplicationHealthCheck.class
-net/rhuanrocha/speakers/Speaker.class
-net/rhuanrocha/FileSystemConfigSource.class
-net/rhuanrocha/ExceptionMapper.class
-net/rhuanrocha/speakers/SpeakerRepository.class
