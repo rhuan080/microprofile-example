@@ -47,7 +47,7 @@ public class MicroProfileConfiguration extends Application {
     private static final String COLLECTION = "speakers";
 
     @Inject
-    @ConfigProperty(name = "bd.subject.path")
+    @ConfigProperty(name = "bd.speaker.path")
     private String bdPath;
 
     private DocumentConfiguration configuration;
