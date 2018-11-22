@@ -1,0 +1,13 @@
+net/rhuanrocha/speakers/SpeakerListFailback.class
+net/rhuanrocha/subjects/SubjectRepository.class
+net/rhuanrocha/speakers/SpeakerClientService.class
+net/rhuanrocha/subjects/SubjectDto.class
+net/rhuanrocha/ApplicationHealthCheck.class
+net/rhuanrocha/subjects/Subject.class
+net/rhuanrocha/speakers/SpeakerFailback.class
+net/rhuanrocha/MicroProfileConfiguration.class
+net/rhuanrocha/speakers/Speaker.class
+net/rhuanrocha/subjects/SubjectService.class
+net/rhuanrocha/FileSystemConfigSource.class
+net/rhuanrocha/ExceptionMapper.class
+net/rhuanrocha/subjects/SubjectEndpoint.class

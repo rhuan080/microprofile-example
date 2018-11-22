@@ -1,0 +1,13 @@
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/MicroProfileConfiguration.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/speakers/SpeakerClientService.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/speakers/Speaker.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/ExceptionMapper.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/subjects/Subject.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/FileSystemConfigSource.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/subjects/SubjectRepository.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/subjects/SubjectDto.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/speakers/SpeakerFailback.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/subjects/SubjectService.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/speakers/SpeakerListFailback.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/subjects/SubjectEndpoint.java
+/home/rhuanrocha/rhuan/papers/project/microprofile-example/mp-subject/src/main/java/net/rhuanrocha/ApplicationHealthCheck.java
