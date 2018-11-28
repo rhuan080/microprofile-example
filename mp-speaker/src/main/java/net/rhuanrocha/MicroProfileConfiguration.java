@@ -2,8 +2,6 @@
 package net.rhuanrocha;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.health.HealthCheck;
-import org.eclipse.microprofile.health.HealthCheckResponse;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
@@ -47,7 +45,7 @@ public class MicroProfileConfiguration extends Application {
     private static final String COLLECTION = "speakers";
 
     @Inject
-    @ConfigProperty(name = "bd.speaker.path")
+    @ConfigProperty(name="bd.speaker.path")
     private String bdPath;
 
     private DocumentConfiguration configuration;
@@ -57,7 +55,7 @@ public class MicroProfileConfiguration extends Application {
     @PostConstruct
     public void init() {
         configuration = new MongoDBDocumentConfiguration();
-        Map<String, Object> settings = Collections.singletonMap("mongodb-server-host-1", bdPath);
+        Map<String, Object> settings = Collections.singletonMap("mongodb-server-host-1",bdPath);
         managerFactory = configuration.get(Settings.of(settings));
     }
 

@@ -5,10 +5,10 @@ USER root
 EXPOSE 9990 8080 8181
 
 ENV PROJECT_HOME /etc/mp-speaker
+
 COPY ./target /etc/mp-speaker/target
 
-RUN  chmod -R 777 ${PROJECT_HOME} && ls ${PROJECT_HOME}
-
+RUN mkdir -p /etc/mp-speaker/config
 
 WORKDIR ${PROJECT_HOME}
 
