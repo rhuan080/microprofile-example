@@ -1,4 +1,4 @@
-package net.rhuanrocha.resource;
+package net.rhuanrocha.endpoint;
 
 
 public class MyEndpointTest {
