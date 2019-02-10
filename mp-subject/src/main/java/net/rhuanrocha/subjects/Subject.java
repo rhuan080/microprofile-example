@@ -4,6 +4,9 @@ import org.jnosql.artemis.Column;
 import org.jnosql.artemis.Entity;
 import org.jnosql.artemis.Id;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -14,18 +17,27 @@ public class Subject {
     private String id;
 
     @Column
+    @NotNull(message="{subject.title.notnull")
     private String title;
 
     @Column
+    @NotNull(message="{subject.title.notnull}")
     private Date date;
 
     @Column
+    @NotNull(message="{subject.hour.notnull}")
+    @Max(value = 23, message = "{subject.hour.max}")
+    @Min(value = 0, message = "{subject.hour.min}")
     private String hour;
 
     @Column
+    @NotNull(message="{subject.minute.notnull}")
+    @Max(value = 23, message = "{subject.minute.max}")
+    @Min(value = 0, message = "{subject.minute.min}")
     private String minute;
 
     @Column
+    @NotNull(message="{subject.speaker.notnull}")
     private String idSpeaker;
 
     @Column

@@ -13,11 +13,11 @@ public class  Speaker {
     @Id("_id")
     private String id;
 
-    @NotNull
+    @NotNull(message = "{speaker.name.notnull")
     @Column
     private String name;
 
-    @NotNull
+    @NotNull(message = "{speaker.description.notnull")
     @Column
     private String description;
 

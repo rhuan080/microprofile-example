@@ -8,6 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import java.util.Objects;
 
 
 @Path("speakers")
+@Traced
 public class SpeakerEndpoint {
 
     @Inject
@@ -28,7 +30,7 @@ public class SpeakerEndpoint {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Counted(name = "speakersCheckedOut")
+    @Counted(name = "speakersCheckedOut",displayName = "speakersCheckedOut",reusable = true, monotonic = true)
     @Operation(summary = "Finds Speakers by id",
             description = "Each Speaker has a id. This query find a speaker by id.")
     @APIResponse(description = "The Speaker",
@@ -45,7 +47,7 @@ public class SpeakerEndpoint {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Counted(name = "speakersCheckedOut")
+    @Counted(name = "speakersCheckedOut",displayName = "speakersCheckedOut",reusable = true, monotonic = true)
     @Operation(summary = "Finds Speakers by name",
             description = "Each Speaker has a name. This query find a speaker by name.")
     @APIResponse( description = "List of Speakers filtered by parameters",
@@ -68,7 +70,7 @@ public class SpeakerEndpoint {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Counted(name = "speakersCheckedOut")
+    @Counted(name = "speakersCheckedOut",displayName = "speakersCheckedOut",reusable = true, monotonic = true)
     @Operation(summary = "Create speaker",
             description = "Create a new speaker.")
     @APIResponse( description = "List of Speakers filtered by parameters",
@@ -76,6 +78,7 @@ public class SpeakerEndpoint {
                     schema = @Schema(implementation = Speaker.class)),
             responseCode = "201")
     @APIResponse(responseCode = "400", description = "Error to save speaker with data received.")
+    @Traced
     public Response save(@RequestBody(
                                     description = "Created speaker object", required = true,
                                     content = @Content(

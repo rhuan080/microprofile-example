@@ -55,7 +55,7 @@ public class FileSystemConfigSource implements ConfigSource {
 
     @Override
     public int getOrdinal() {
-        return 300;
+        return 200;
     }
 
     @Override

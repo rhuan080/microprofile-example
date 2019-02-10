@@ -4,6 +4,8 @@ import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.opentracing.Traced;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,6 +17,8 @@ import java.util.List;
 
 
 @Path("/speakers")
+@RegisterRestClient
+@Traced
 public interface SpeakerClientService {
 
     @GET

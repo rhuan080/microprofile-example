@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+        <title>MP Event</title>
+
+        <style>
+            .card{
+                display: inline;
+                float: left;
+                margin: 5px 0px 0px 7px;
+            }
+            .button-top{
+                margin: 40px 0px 20px 0px;
+            }
+            
+            .material-icons.buttonadd { 
+                font-size: 18px;
+                position: relative;
+                top: 3px;
+            }
+
+            .hour-minute{
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .hour-minute select{
+                width: 90px;
+                display:inline;
+                float: left;
+            }
+
+            .hour-minute span{
+                margin: 5px 10px 5px 10px;
+                display:inline;
+                float: left;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+                <a class="navbar-brand text-white ml-5" href="#">MP-Event</a>
+                <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item active">
+                        <a class="nav-link text-white" href="speakers.html">Speakers</a>
+                      </li>
+                      <li class="nav-item active">
+                        <a class="nav-link text-white" href="index.html">Subjects<span class="sr-only">(current)</span></a>
+                      </li>
+                     
+                    </ul>
+                    
+                  </div>
+            </nav>
+        </header>
+
+        <div id="app-subject" class="container mt-5">
+
+            <h2 class="font-weight-bold">Subjects</h2>
+
+            <div class="button-top">
+                <button type="button" class="btn btn-primary" v-on:click='loadNewSubject()' data-toggle="modal" data-target="#app-new-subject" ><i class="material-icons buttonadd">add</i> New Subject</button>
+            </div>
+            <div v-for="subject in subjects" class="card" style="width: 32rem;">
+                <div class="card-body">
+                    <h5 class="card-title font-weight-bold">{{subject.title}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"></h6>
+                    <p class="card-text"><span class="font-weight-bold" >Description: </span>{{subject.description}}</p>
+                    <p class="card-text"><span class="font-weight-bold" >Date: </span>{{subject.date.getUTCDate()+"/"+(subject.date.getMonth()+1)+"/"+subject.date.getFullYear()}}</p>
+                    <p class="card-text"><span class="font-weight-bold" >Hour: </span>{{subject.hour}}:{{subject.minute}}</p>
+                    <p class="card-text"><span class="font-weight-bold" >Speaker: </span><a v-if="!Object.is(subject.speaker, null)" href="#" class="card-link">{{subject.speaker.name}}</a></p>
+                    <a href="#" class="card-link">See more</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="app-new-subject" class="modal" tabindex="-1" role="dialog" id="addSubjectModal" >
+            <div class="modal-dialog modal-dialog-centered modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">New Subject</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form @submit="save" method="post" >
+                        <div class="alert alert-danger" role="alert" v-if="form.erro">
+                            <p v-for="mensagemErro in form.mensagemErros" >{{mensagemErro}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="email" class="form-control" id="subject" v-model="form.subject" name="subject" aria-describedby="subjectHelp" placeholder="Enter the subject">
+                            <small id="subjectHelp" class="form-text text-muted">It is your subject. All marketing is done by this</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="assunto">Description</label>
+                            <textarea class="form-control" id="description" name="description" v-model="form.description"  rows="5" ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" class="form-control" id="date"  v-model="form.date" name="date" />
+                        </div>
+
+                         <div class="form-group">
+                            <label for="hour">Hour</label>
+                            <div class ="hour-minute" >
+                                <select class="form-control" id="hour" v-model="form.hour" >
+                                    <option value="00" >00</option>
+                                    <option value="01" >01</option>
+                                    <option value="02" >02</option>
+                                    <option value="03" >03</option>
+                                    <option value="04" >04</option>
+                                    <option value="05" >05</option>
+                                    <option value="06" >06</option>
+                                    <option value="07" >07</option>
+                                    <option value="08" >08</option>
+                                    <option value="09" >09</option>
+                                    <option value="10" >10</option>
+                                    <option value="11" >11</option>
+                                    <option value="12" >12</option>
+                                    <option value="13" >13</option>
+                                    <option value="14" >14</option>
+                                    <option value="15" >15</option>
+                                    <option value="16" >16</option>
+                                    <option value="17" >17</option>
+                                    <option value="18" >18</option>
+                                    <option value="19" >19</option>
+                                    <option value="20" >20</option>
+                                    <option value="21" >21</option>
+                                    <option value="22" >22</option>
+                                    <option value="23" >23</option>
+                                </select>
+                                <span>:</span>
+                                 <select class="form-control" id="minute" v-model="form.minute" >
+                                    <option value="00" >00</option>
+                                    <option value="01" >01</option>
+                                    <option value="02" >02</option>
+                                    <option value="03" >03</option>
+                                    <option value="04" >04</option>
+                                    <option value="05" >05</option>
+                                    <option value="06" >06</option>
+                                    <option value="07" >07</option>
+                                    <option value="08" >08</option>
+                                    <option value="09" >09</option>
+                                    <option value="10" >10</option>
+                                    <option value="11" >11</option>
+                                    <option value="12" >12</option>
+                                    <option value="13" >13</option>
+                                    <option value="14" >14</option>
+                                    <option value="15" >15</option>
+                                    <option value="16" >16</option>
+                                    <option value="17" >17</option>
+                                    <option value="18" >18</option>
+                                    <option value="19" >19</option>
+                                    <option value="20" >20</option>
+                                    <option value="21" >21</option>
+                                    <option value="22" >22</option>
+                                    <option value="23" >23</option>
+                                    <option value="24" >24</option>
+                                    <option value="25" >25</option>
+                                    <option value="26" >26</option>
+                                    <option value="27" >27</option>
+                                    <option value="28" >28</option>
+                                    <option value="29" >29</option>
+                                    <option value="30" >30</option>
+                                    <option value="31" >31</option>
+                                    <option value="32" >32</option>
+                                    <option value="33" >33</option>
+                                    <option value="34" >34</option>
+                                    <option value="35" >35</option>
+                                    <option value="36" >36</option>
+                                    <option value="37" >37</option>
+                                    <option value="38" >38</option>
+                                    <option value="39" >39</option>
+                                    <option value="40" >40</option>
+                                    <option value="41" >41</option>
+                                    <option value="42" >42</option>
+                                    <option value="43" >43</option>
+                                    <option value="44" >44</option>
+                                    <option value="45" >45</option>
+                                    <option value="46" >46</option>
+                                    <option value="47" >47</option>
+                                    <option value="48" >48</option>
+                                    <option value="49" >49</option>
+                                    <option value="50" >50</option>
+                                    <option value="51" >51</option>
+                                    <option value="52" >52</option>
+                                    <option value="53" >53</option>
+                                    <option value="54" >54</option>
+                                    <option value="55" >55</option>
+                                    <option value="56" >56</option>
+                                    <option value="57" >57</option>
+                                    <option value="58" >58</option>
+                                    <option value="59" >59</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="speaker">Speaker</label>
+                            <select class="form-control" id="speaker" v-model="form.speaker" >
+                                <option v-for="speaker in speakers" v-bind:value="speaker.id" >{{speaker.name}}</option>
+                            </select>
+                        </div>
+
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click='save()' >Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click='cleanForm()'>Close</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script src="app-web.js"></script>
+        <script src="app-subject.js"></script>
+    </body>
+</html>

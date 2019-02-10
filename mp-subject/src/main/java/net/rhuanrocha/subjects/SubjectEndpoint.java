@@ -1,5 +1,8 @@
 package net.rhuanrocha.subjects;
 
+import io.opentracing.Span;
+import io.opentracing.tag.Tags;
+import net.rhuanrocha.speakers.SpeakerClientRest;
 import net.rhuanrocha.speakers.SpeakerClientService;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -10,7 +13,9 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.opentracing.Traced;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -21,18 +26,30 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Path("subjects")
+@Traced
 public class SubjectEndpoint {
 
     @Inject
     private SubjectService subjectService;
 
     @Inject
+    private SpeakerClientRest speakerClientRest;
+
+    @Inject
+    @RestClient
+    private SpeakerClientService speakerClientService;
+
+    @Inject
+    private io.opentracing.Tracer configuredTracer;
+
+    /*@Inject
     @ConfigProperty(name="service.mpspeaker.path")
     private String pathMpsubject;
-
+*/
 
 
     @GET
@@ -45,11 +62,8 @@ public class SubjectEndpoint {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = Subject.class)))
     @APIResponse(responseCode = "404", description = "Subject not found")
+    @Traced
     public Response findById(@Parameter(required = true,name = "id", description = "Parameter to filter subject by id") @PathParam("id") String id) throws MalformedURLException {
-
-        SpeakerClientService speakerClientService = RestClientBuilder.newBuilder()
-                .baseUrl(new URL(pathMpsubject))
-                .build(SpeakerClientService.class);
 
         Subject subject = subjectService.findById(id);
 
@@ -72,14 +86,12 @@ public class SubjectEndpoint {
             content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = SubjectDto.class, anyOf = SubjectDto.class)),
             responseCode = "200")
+    //@Traced
     public Response findByParameters(@Parameter(required = false,name = "nameSpeaker", description = "Parameter to filter subjects by speaker name")
                                 @QueryParam("nameSpeaker") String nameSpeaker,
                                      @Parameter(required = false,name = "idSpeaker", description = "Parameter to filter subjects by speaker id")
                                      @QueryParam("idSpeaker") String idSpeaker) throws MalformedURLException {
 
-        SpeakerClientService speakerClientService = RestClientBuilder.newBuilder()
-                .baseUrl(new URL(pathMpsubject))
-                .build(SpeakerClientService.class);
 
         if(StringUtils.isNotBlank( idSpeaker)){
 
@@ -87,28 +99,16 @@ public class SubjectEndpoint {
                     .ok(subjectService
                             .findByIdSpeaker(idSpeaker)
                             .stream()
-                            .map(subject -> SubjectDto.build(subject, speakerClientService.findById(subject.getIdSpeaker())))
+                            .map(subject -> SubjectDto.build(subject, speakerClientRest.findById(subject.getIdSpeaker())))
                             .collect(Collectors.toList()))
                     .build();
         }
-
-       /* if(StringUtils.isNotBlank( nameSpeaker)){
-
-            return Response
-                    .ok(subjectService
-                            .findByNameSpeaker(idSpeaker)
-                            .stream()
-                            .map(subject -> SubjectDto.build(subject, speakerClientService.findById(subject.getIdSpeaker())))
-                            .collect(Collectors.toList()))
-                    .build();
-        }*/
-
 
         return Response
                 .ok(subjectService
                         .findAll()
                         .stream()
-                        .map(subject -> SubjectDto.build(subject, speakerClientService.findById(subject.getIdSpeaker())))
+                        .map(subject -> SubjectDto.build(subject, speakerClientRest.findById(subject.getIdSpeaker())))
                         .collect(Collectors.toList()))
                 .build();
 

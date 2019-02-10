@@ -15,9 +15,9 @@ public class ApplicationHealthCheck implements HealthCheck {
         return HealthCheckResponse
                 .named("application-check")
                 .up()
-                .withData("CPU Available", Runtime.getRuntime().availableProcessors())
-                .withData( "Memory Free", Runtime.getRuntime().freeMemory())
-                .withData("Total Memory", Runtime.getRuntime().totalMemory())
+                .withData("CPUAvailable", Runtime.getRuntime().availableProcessors())
+                .withData( "MemoryFree", Runtime.getRuntime().freeMemory())
+                .withData("TotalMemory", Runtime.getRuntime().totalMemory())
                 .build();
     }
 

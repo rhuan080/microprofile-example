@@ -11,7 +11,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <microprofile>2.0.1</microprofile>
+        <microprofile>2.1</microprofile>
         <version.thorntail>2.2.1.Final</version.thorntail>
         <maven.surefire.plugin.version>2.20</maven.surefire.plugin.version>
     </properties>
@@ -77,7 +77,10 @@
             <artifactId>bean-validation</artifactId>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>jaeger</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.jnosql.artemis</groupId>
             <artifactId>artemis-document</artifactId>
@@ -88,12 +91,12 @@
             <artifactId>mongodb-driver</artifactId>
             <version>0.0.7</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>8.0</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 </project>

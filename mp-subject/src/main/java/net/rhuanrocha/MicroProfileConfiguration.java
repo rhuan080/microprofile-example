@@ -5,6 +5,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
 import org.eclipse.microprofile.openapi.annotations.info.Contact;
 import org.eclipse.microprofile.openapi.annotations.info.Info;
+import org.eclipse.microprofile.opentracing.Traced;
 import org.jnosql.diana.api.Settings;
 import org.jnosql.diana.api.document.DocumentCollectionManager;
 import org.jnosql.diana.api.document.DocumentCollectionManagerFactory;
@@ -12,6 +13,7 @@ import org.jnosql.diana.api.document.DocumentConfiguration;
 import org.jnosql.diana.mongodb.document.MongoDBDocumentConfiguration;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
@@ -38,12 +40,13 @@ import java.util.Map;
         )
 )
 @ApplicationPath("/")
+@ApplicationScoped
 public class MicroProfileConfiguration extends Application {
 
     private static final String COLLECTION = "subjects";
 
     @Inject
-    @ConfigProperty(name ="bd.subject.path")
+    @ConfigProperty(name ="bd.subject.path",defaultValue = "http://172.18.0.5:8080/")
     private String bdPath;
 
     private DocumentConfiguration configuration;
@@ -55,6 +58,7 @@ public class MicroProfileConfiguration extends Application {
         configuration = new MongoDBDocumentConfiguration();
         Map<String, Object> settings = Collections.singletonMap("mongodb-server-host-1", bdPath);
         managerFactory = configuration.get(Settings.of(settings));
+
     }
 
     @Produces
@@ -62,5 +66,7 @@ public class MicroProfileConfiguration extends Application {
         return managerFactory.get(COLLECTION);
 
     }
+
+
 
 }
